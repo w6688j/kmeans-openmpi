@@ -6,7 +6,6 @@
 int mpirank, p;
 int pN,d,C,N;
 
-// from hpc2017 class started code
 static int compare(const void *a, const void *b)
 {
   int *da = (int *)a;
@@ -22,7 +21,6 @@ static int compare(const void *a, const void *b)
 
 
 double **alloc_2d_double(int rows, int cols) {
-  // modified from http://stackoverflow.com/questions/5901476/sending-and-receiving-2d-array-over-mpi
     int i;
     double *data = (double *)malloc(rows*cols*sizeof(double));
     double **array= (double **)malloc(rows*sizeof(double*));
@@ -114,7 +112,6 @@ void getInitialClustersFromData(char *file_name,double **centers){
                 if (c_i == C){
                   break;
                 }
-                //simple duplicate index check .TODO make this at the beginning
                 else if (indices[c_i]==indices[c_i-1]){
                     indices[c_i]+=1;
                 }

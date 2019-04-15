@@ -42,4 +42,146 @@ To be able observe the scaling behaviour better between processes we can normali
 
 | Weak Scaling | Strong Scaling |
 | ------------ | -------------- |
-| ![weak2](images/weak2.png) | ![strong2](images/strong2.png)|
+| ![weak2](images/weak2.png) | ![strong2](images/strong2.png)|  
+
+#### 单进程
+3维，10000个点，9个中心，10000次
+```asm
+不成功
+编译: gcc k_means_single.c -o k_means_single -lrt -lm 
+运行: ./k_means_single 3 10000 9 points.dat 1000
+
+用mpi的单进程运行
+运行: mpirun -np 1 ./k_means 3 10000 9 points.dat 10000
+结果: 
+3d data,Total: 10000 points,10000 points per process from file points.dat
+Center 0 from line 540
+Center 1 from line 2567
+Center 2 from line 3426
+Center 3 from line 3926
+Center 4 from line 5211
+Center 5 from line 5368
+Center 6 from line 5736
+Center 7 from line 7763
+Center 8 from line 9172
+centers:
+-0.966626 0.992238 -0.044355 
+1.061053 0.962075 0.031377 
+0.949319 -1.079107 0.031815 
+-1.077819 -0.999596 0.064136 
+0.026441 0.036646 3.204902 
+1.044101 1.012886 5.994005 
+-0.991692 0.987134 6.008131 
+-1.046635 -1.001105 6.027964 
+1.031660 -1.074799 5.995452 
+Time elapsed is 64.095202 seconds.
+```
+
+#### 多进程
+```asm
+编译: gcc k_means.c -o k_means_single -lrt -lm 
+``` 
+##### p=2
+```asm
+运行: mpirun -np 2 ./k_means 3 10000 9 points.dat 10000
+结果:
+3d data,Total: 10000 points,5000 points per process from file points.dat
+Center 0 from line 540
+Center 1 from line 2567
+Center 2 from line 3426
+Center 3 from line 3926
+Center 4 from line 5211
+Center 5 from line 5368
+Center 6 from line 5736
+Center 7 from line 7763
+Center 8 from line 9172
+centers:
+-0.966626 0.992238 -0.044355 
+1.061053 0.962075 0.031377 
+0.949319 -1.079107 0.031815 
+-1.077819 -0.999596 0.064136 
+0.026441 0.036646 3.204902 
+1.044101 1.012886 5.994005 
+-0.991692 0.987134 6.008131 
+-1.046635 -1.001105 6.027964 
+1.031660 -1.074799 5.995452 
+Time elapsed is 33.216177 seconds.
+```
+##### p=4
+```asm
+运行: mpirun -np 4 ./k_means 3 10000 9 points.dat 10000
+结果:
+3d data,Total: 10000 points,2500 points per process from file points.dat
+Center 0 from line 59
+Center 1 from line 540
+Center 2 from line 3426
+Center 3 from line 3926
+Center 4 from line 5211
+Center 5 from line 5368
+Center 6 from line 5736
+Center 7 from line 7763
+Center 8 from line 9172
+centers:
+-0.966820 0.986599 -0.044579 
+-1.032727 -1.011959 0.067240 
+1.059765 0.976034 0.033215 
+0.997752 -1.061490 0.022291 
+0.026519 0.035481 3.202765 
+1.044101 1.012886 5.994005 
+-0.991692 0.987134 6.008131 
+-1.046635 -1.001105 6.027964 
+1.031660 -1.074799 5.995452 
+Time elapsed is 16.974430 seconds.
+```
+##### p=8
+```asm
+运行: mpirun -np 8 ./k_means 3 10000 9 points.dat 10000
+结果:
+3d data,Total: 10000 points,1250 points per process from file points.dat
+Center 0 from line 59
+Center 1 from line 540
+Center 2 from line 3426
+Center 3 from line 3926
+Center 4 from line 5211
+Center 5 from line 5368
+Center 6 from line 5736
+Center 7 from line 7763
+Center 8 from line 9172
+centers:
+0.303797 81379.183544 -0.430380 
+0.678788 30419.854545 -0.436364 
+0.408451 69200.612676 -0.450704 
+-0.140151 20.884488 2.543016 
+0.723881 19568.738806 -0.492537 
+0.561404 55720.035088 -0.421053 
+0.247863 94435.145299 -0.427350 
+0.742647 9656.485294 -0.389706 
+0.538961 42230.103896 -0.500000 
+Time elapsed is 53.633947 seconds.
+```
+##### p=16
+```asm
+运行: mpirun -np 16 ./k_means 3 10000 9 points.dat 10000
+结果:
+3d data,Total: 10000 points,625 points per process from file points.dat
+Center 0 from line 59
+Center 1 from line 540
+Center 2 from line 3426
+Center 3 from line 3926
+Center 4 from line 5211
+Center 5 from line 5736
+Center 6 from line 7763
+Center 7 from line 8690
+Center 8 from line 9172
+centers:
+0.617886 53724.097561 -0.243902 
+0.674074 32833.422222 -0.370370 
+0.333333 73745.869919 -0.373984 
+0.764706 15668.068627 -0.359447 
+-0.075764 43.224037 3.293977 
+0.200000 91046.764706 -0.247059 
+0.842248 -0.323529 876.058824 
+0.967153 0.000000 7183.166667 
+1.119455 0.538462 3540.384615 
+Time elapsed is 53.560410 seconds.
+```
