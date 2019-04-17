@@ -1,0 +1,8 @@
+#!/bin/bash
+#PBS -N k_means
+#PBS -l nodes=2:ppn=4
+#PBS -j oe
+
+cd $PBS_O_WORKDIR
+procs=$(cat $PBS_NODEFILE | wc -l)
+time mpirun -np $procs -machinefile $PBS_NODEFILE ./k_means 3 10000 9 points.dat 10000
